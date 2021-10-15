@@ -4,7 +4,8 @@ const Schema = yup.object().shape({
     customerName: yup
         .string()
         .trim()
-        .required('Customer Name is Required'),
+        .required('Customer Name is Required ')
+        .min(2, 'name must be at least 2 characters'),
     pizzaSize: yup
         .string()
         .oneOf(['Personal', 'Small', 'Medium', 'Large', 'X-Large'])

@@ -1,5 +1,6 @@
+// import axios from 'axios';
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 // import Schema from './Schema'
 
 
@@ -18,13 +19,15 @@ export default function Order(props) {
     }
 
     return (
+        <>
         <form onSubmit={onSubmit}>
-            <div id='order-pizza'>
+            <div id='pizza-form'>
               <h1>Create your own custom pizza</h1>
                 <div className='errors'>
                   <p>{err.customerName}</p>
                   <p>{err.pizzaSize}</p>
                 </div>
+                
             </div>
 
             <div className='form-inputs'>
@@ -128,7 +131,7 @@ export default function Order(props) {
             </label>
           </div>
           <label>Special Instructions&nbsp;
-            <textarea
+            <textarea id='special-text'
                 name='specials'
                 type='text'
                 onChange={onChange}
@@ -136,13 +139,14 @@ export default function Order(props) {
             />
           </label>
           <div className='nav-link'>
-                <Link to='/order/confirmation'>
-                    <button>Place Your Order!</button>
-                </Link>
-                <Link to='/'>
-                    <button>Cancel Order!</button>
-                </Link>
-              </div>
+            <Link to='/order/confirmation'>
+                <button>Place Your Order!</button>
+            </Link>
+            <Link to='/'>
+                <button>Cancel Order!</button>
+            </Link>
+          </div>
         </form>
+        </>
     )
 }

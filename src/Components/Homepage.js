@@ -11,17 +11,12 @@ export default function Homepage() {
         <ul className='nav'>
           <li>
             <Link to='/'>
-                <button name='homeBtn'>Home</button>
-            </Link>
-          </li>
-          <li>
-            <Link to='/order'>
-                <button name='orderBtn'>Order</button>
+                <button id='order-pizza' name='homeBtn'>Home</button>
             </Link>
           </li>
           <li>
             <Link to='/'>
-                <button id='order-pizza' name='helpBtn'>Help</button>
+                <button name='helpBtn'>Help</button>
             </Link>
           </li>
         </ul>
