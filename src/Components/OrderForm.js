@@ -1,15 +1,18 @@
 // import axios from 'axios';
+import axios from 'axios';
 import React from 'react'
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 // import Schema from './Schema'
 
 
 export default function Order(props) {
     const { values, submit, change, err} = props
 
-    const onSubmit = (event) => {
-        event.preventDefault();
-        submit();
+    const onSubmit = (formData) => {
+        console.log(formData);
+        axios.post('https://reqres.in/api/orders', formData)
+          .then(res => console.log((res.data), 'Congrats, Your Pizza is getting ready'))
+          .catch(error => console.log((error), 'Alert there is an Error! :()'))
     }
 
     const onChange = (event) => {
@@ -23,6 +26,8 @@ export default function Order(props) {
         <form onSubmit={onSubmit}>
             <div id='pizza-form'>
               <h1>Create your own custom pizza</h1>
+              <Route path='/pizza'>Help</Route>
+
                 <div className='errors'>
                   <p>{err.customerName}</p>
                   <p>{err.pizzaSize}</p>
