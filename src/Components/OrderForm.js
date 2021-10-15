@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 
 export default function Order(props) {
-    const { values, submit, change, disabled, err} = props
+    const { values, submit, change, err} = props
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -21,7 +21,7 @@ export default function Order(props) {
         <form onSubmit={onSubmit}>
             <div id='order-pizza'>
               <h1>Create your own custom pizza</h1>
-                <div className='err'>
+                <div className='errors'>
                   <p>{err.customerName}</p>
                   <p>{err.pizzaSize}</p>
                 </div>
@@ -29,7 +29,7 @@ export default function Order(props) {
 
             <div className='form-inputs'>
             <label>Enter Your Name Here&nbsp;
-                <input
+                <input id='name-input'
                   name='customerName'
                   type='text'
                   value={values.customerName}
@@ -38,17 +38,17 @@ export default function Order(props) {
             </label>
 
             <label>Choose Pizza Size!&nbsp;
-                <select 
+                <select id='size-dropdown'
                   onChange={onChange}
                   value={values.pizzaSize}
                   name='pizzaSize'
                 >
                     <option value=''>--Select a Size--</option>
-                    <option value='personal'>Personal</option>
-                    <option value='small'>Small</option>
-                    <option value='medium'>Medium</option>
-                    <option value='large'>Large</option>
-                    <option value='x-large'>X-Large</option>
+                    <option value='Personal'>Personal</option>
+                    <option value='Small'>Small</option>
+                    <option value='Medium'>Medium</option>
+                    <option value='Large'>Large</option>
+                    <option value='X-Large'>X-Large</option>
                 </select>
             </label>
           </div>          
@@ -128,7 +128,7 @@ export default function Order(props) {
             </label>
           </div>
           <label>Special Instructions&nbsp;
-            <input disabled={disabled}
+            <textarea
                 name='specials'
                 type='text'
                 onChange={onChange}

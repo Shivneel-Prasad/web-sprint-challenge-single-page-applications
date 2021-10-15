@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
-import { Link, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import * as yup from 'yup'
 // import axios from 'axios'
 import Schema from './Components/Schema'
@@ -26,15 +26,13 @@ const initialFormValues = {
 const initialFormErrors = {
   customerName: 'Please provide a name for the order',
   pizzaSize: 'Please choose the size of the pizza'
-  
 }
 
 export default function App() {
   const [formValues, setFormValues] = useState(initialFormValues)
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [confirmation, setConfirmation] = useState(initialFormValues)
-  const [disabled, setDisabled] = useState(true)
-
+  
   const creatNewPizzaOrder = NewPizzaOrder => {
     setConfirmation(NewPizzaOrder);
     setFormValues(initialFormValues);
@@ -69,10 +67,6 @@ export default function App() {
     creatNewPizzaOrder(NewPizzaOrder);
   }
 
-  useEffect(() => {
-    Schema.isValid(formValues).then(valid => setDisabled(!valid));
-  }, [formValues]);
-
   return (
     <Switch>
       <Route path='/pizza'>
@@ -80,12 +74,11 @@ export default function App() {
           values={formValues}
           submit={formSubmit}
           change={inputChange}
-          disabled={disabled}
           err={formErrors}
         />
       </Route>
-      <Route path='/order/confirmation'>
-        <Confirmation details={confirmation} />
+      <Route path='/Order/confirmation'>
+        <Confirmation details={formValues} />
       </Route>
       <Route path='/'>
         <Homepage />

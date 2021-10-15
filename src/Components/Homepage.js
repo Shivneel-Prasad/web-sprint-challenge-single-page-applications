@@ -15,8 +15,13 @@ export default function Homepage() {
             </Link>
           </li>
           <li>
+            <Link to='/order'>
+                <button name='orderBtn'>Order</button>
+            </Link>
+          </li>
+          <li>
             <Link to='/'>
-                <button name='helpBtn'>Help</button>
+                <button id='order-pizza' name='helpBtn'>Help</button>
             </Link>
           </li>
         </ul>

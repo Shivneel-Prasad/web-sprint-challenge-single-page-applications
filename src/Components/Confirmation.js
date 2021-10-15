@@ -1,6 +1,10 @@
 import React from 'react'
+import { Link, useHistory } from 'react-router-dom'
+
 
 export default function Confirmation({ details }){
+  const history = useHistory();
+
   if(!details) {
     return <h3>Loading Your Order, Please Wait!!</h3>
   }
@@ -19,6 +23,14 @@ export default function Confirmation({ details }){
         </div>
     }
     <p>Special Instructions: {details.specials}</p>
+    <div className='nav-link'>
+        <Link to='/'>
+            <button>Return to Main Menu</button>
+        </Link>
+        <Link to='/order'>
+            <button onClick={() => history.goBack()}>Go Back</button>
+        </Link>
+    </div>
 </div>
   )
 }
