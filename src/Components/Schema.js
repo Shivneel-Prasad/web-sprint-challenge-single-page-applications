@@ -16,7 +16,8 @@ const Schema = yup.object().shape({
     Onions: yup.boolean(),
     Olives: yup.boolean(),
     Pineapple: yup.boolean(),
-    Cheese: yup.boolean()
+    Cheese: yup.boolean(),
+    specials: yup.string().notRequired()
 })
 
 export default Schema;

@@ -1,16 +1,96 @@
-import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
-import Homepage from './Components/Homepage';
+import React, { useState, useEffect } from 'react'
 import './App.css'
+import { Link, Route, Switch } from 'react-router-dom'
+import * as yup from 'yup'
+// import axios from 'axios'
+import Schema from './Components/Schema'
+import Homepage from './Components/Homepage'
+import Confirmation from './Components/Confirmation'
+import Order from './Components/OrderForm'
 
 
-const App = () => {
+const initialFormValues = {
+  customerName: '',
+  pizzaSize: '',
+  Pepperoni: false,
+  Sausage: false,
+  Bacon: false,
+  Chicken: false,
+  Onions: false,
+  Olives: false,
+  Pineapple: false,
+  Cheese: false,
+  Special: ''
+}
+
+const initialFormErrors = {
+  customerName: 'Please provide a name for the order',
+  pizzaSize: 'Please choose the size of the pizza'
+  
+}
+
+export default function App() {
+  const [formValues, setFormValues] = useState(initialFormValues)
+  const [formErrors, setFormErrors] = useState(initialFormErrors)
+  const [confirmation, setConfirmation] = useState(initialFormValues)
+  const [disabled, setDisabled] = useState(true)
+
+  const creatNewPizzaOrder = NewPizzaOrder => {
+    setConfirmation(NewPizzaOrder);
+    setFormValues(initialFormValues);
+  }
+
+  const verify = (name, value) => {
+    // Running validation with Yup
+    yup.reach(Schema, name)
+      .validate(value)
+      .then(() => {
+        setFormErrors({ ...formErrors, [name]: '' })
+      }).catch(err => {
+        setFormErrors({ ...formErrors, [name]: err.errors[0] })
+      })
+  }
+
+  const inputChange = (name, value) => {
+    verify(name, value)
+    setFormValues({
+      ...formValues,
+      [name]: value // this is not an array
+    })
+  }
+
+  const formSubmit = () => {
+    const NewPizzaOrder = {
+      customerName: formValues.customerName.trim(),
+      pizzaSize: formValues.pizzaSize.trim(),
+      Toppings: ['Pepperoni', 'Sausage', 'Bacon', 'Chicken', 'Onions', 'Olives', 'Pineapple', 'Cheese'].filter(topping => !!formValues[topping]),
+      specials: formValues.specials.trim()
+    };
+    creatNewPizzaOrder(NewPizzaOrder);
+  }
+
+  useEffect(() => {
+    Schema.isValid(formValues).then(valid => setDisabled(!valid));
+  }, [formValues]);
+
   return (
-    <BrowserRouter>
-      <div>
+    <Switch>
+      <Route path='/pizza'>
+        <Order 
+          values={formValues}
+          submit={formSubmit}
+          change={inputChange}
+          disabled={disabled}
+          err={formErrors}
+        />
+      </Route>
+      <Route path='/order/confirmation'>
+        <Confirmation details={confirmation} />
+      </Route>
+      <Route path='/'>
         <Homepage />
-      </div>
-    </BrowserRouter>
+      </Route>
+    </Switch>
   )
 };
-export default App;
+
